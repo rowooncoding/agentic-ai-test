@@ -178,3 +178,30 @@ VITE_API_BASE_URL=https://api.example.com
 ```
 
 > Vite 환경 변수는 반드시 `VITE_` 접두사가 필요합니다.
+
+---
+
+## Claude Code 설정
+
+`.claude/` 폴더에 Claude Code 관련 설정이 있습니다.
+
+### 전역 규칙
+
+| 파일 | 역할 |
+|------|------|
+| `CLAUDE.md` | 페르소나, 응답 형식, 제한 사항 등 전역 규칙 |
+| `.claude/rules/harness.md` | TDD 워크플로우, 테스트 네이밍, Mock 기준, 커버리지 임계값 |
+
+### 슬래시 커맨드 스킬
+
+| 커맨드 | 설명 |
+|--------|------|
+| `/query`, `/hook`, `/qhook` | TanStack Query v5 API 함수 + 훅 생성 |
+| `/table` | TanStack Table v8 기반 DataTable + columns 생성 |
+| `/push` | README 업데이트 → 커밋 → 푸시 자동화 |
+
+### 스킬 설계 원칙
+
+- **코드 예제 최소화**: Claude가 이미 아는 라이브러리 사용법은 스킬에 포함하지 않음
+- **프로젝트 고유 규칙만 명시**: 폴더 구조, QueryKey Factory 패턴, pageSize 기본값 등 이 프로젝트에서만 통용되는 컨벤션 위주로 작성
+- **기준 구현체 참조 강제**: `table` 스킬은 작업 시작 전 `src/components/data-table/DataTable.tsx`를 읽도록 강제하여 매번 동일한 Props 구조로 생성되도록 고정
