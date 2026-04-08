@@ -31,7 +31,7 @@ import {
   useSortable,
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { ChevronDown, ChevronUp, ChevronsUpDown, GripVertical } from 'lucide-react'
+import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -78,16 +78,10 @@ function SortableHeaderCell({ id, children, className, style }: SortableHeaderCe
         opacity: isDragging ? 0.5 : 1,
         position: 'relative',
       }}
-      className={cn('select-none', className)}
+      className={cn('cursor-grab select-none active:cursor-grabbing', className)}
+      {...attributes}
+      {...listeners}
     >
-      <span
-        className="mr-1 inline-flex cursor-grab items-center opacity-30 hover:opacity-70 active:cursor-grabbing"
-        {...attributes}
-        {...listeners}
-        aria-label="컬럼 이동"
-      >
-        <GripVertical className="h-3.5 w-3.5" />
-      </span>
       {children}
     </TableHead>
   )
@@ -177,8 +171,9 @@ function DataTable<TData>({
 
   // ─── DnD 설정 ──────────────────────────────────────────────────────────────
   const sensors = useSensors(
-    useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
+    // 8px 이상 드래그해야 활성화 — 정렬 클릭과 드래그 구분
+    useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 5 } }),
     useSensor(KeyboardSensor, {}),
   )
 
@@ -225,7 +220,7 @@ function DataTable<TData>({
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
           >
-            <Table style={{ width: table.getTotalSize() }}>
+            <Table style={{ width: '100%', minWidth: table.getTotalSize() }}>
               {/* 헤더 고정 */}
               <TableHeader className="sticky top-0 z-40 bg-muted/50">
                 {table.getHeaderGroups().map((headerGroup) => (

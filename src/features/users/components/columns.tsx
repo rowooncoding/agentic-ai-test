@@ -30,15 +30,17 @@ export const userColumns: ColumnDef<User>[] = [
       />
     ),
     cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="행 선택"
-      />
+      <div className="flex items-center">
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="행 선택"
+        />
+      </div>
     ),
     enableSorting: false,
     enableResizing: false,
-    size: 40,
+    size: 52,
   },
   {
     accessorKey: 'name',

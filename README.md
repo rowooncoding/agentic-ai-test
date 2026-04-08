@@ -167,6 +167,19 @@ src/features/user/
 └── types.ts
 ```
 
+### 레이아웃 구조
+
+어드민 레이아웃(`AppLayout`)이 `src/components/layout/`에 구현되어 있습니다.
+
+```
+src/components/layout/
+├── AppLayout.tsx   # Sidebar + Header + <Outlet /> 조합
+├── Sidebar.tsx     # 좌측 네비게이션 (로고 + 메뉴)
+└── Header.tsx      # 상단 헤더 (페이지 타이틀 + 계정)
+```
+
+새 페이지 추가 시 `src/app/router.tsx`의 `AppLayout` children에 라우트를 추가합니다.
+
 ---
 
 ## 환경 변수

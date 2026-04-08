@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import type { PaginationState, SortingState } from '@tanstack/react-table'
 import { DataTable } from '@/components/data-table/DataTable'
-import { Input } from '@/components/ui/input'
 import { useUsers } from '../api/useUsers'
 import { userColumns } from './columns'
 
@@ -22,8 +21,7 @@ function UsersPage() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="mb-6 text-2xl font-semibold">사용자 관리</h1>
+    <div className="flex h-full flex-col gap-4">
       <DataTable
         columns={userColumns}
         data={data?.rows ?? []}
